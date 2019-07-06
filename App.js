@@ -1,11 +1,10 @@
-import { AppLoading } from 'expo';
-import { Asset } from 'expo-asset';
+import {AppLoading} from 'expo';
+import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
-import React, { useState } from 'react';
-import { Platform, StatusBar, StyleSheet, View, SafeAreaView } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
-import {AppContainer} from "./src/client/Navigation";
-import Header from './src/common/Header';
+import React, {useState} from 'react';
+import {Platform, StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
+import {Ionicons} from '@expo/vector-icons';
+import {AppContainer, Drawer} from "./src/client/Navigation";
 // import AppNavigator from './navigation/AppNavigator';
 
 export default function App(props) {
@@ -22,8 +21,9 @@ export default function App(props) {
   } else {
     return (
       <SafeAreaView style={styles.container}>
-        <Header/>
-        <AppContainer/>
+        <Drawer>
+          <AppContainer/>
+        </Drawer>
       </SafeAreaView>
     );
   }

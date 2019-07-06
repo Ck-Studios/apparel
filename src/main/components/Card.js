@@ -26,6 +26,7 @@ const Header = styled.View`
   align-items: flex-end;
   padding-left: 15;
   padding-right: 15;
+  padding-bottom: 15;
 `;
 
 const ContentBody = styled.View`
@@ -34,10 +35,12 @@ const ContentBody = styled.View`
 `;
 
 const Layout = styled(Container)`
-  margin-bottom: 15;
+  flex: 1;
+  min-height: 250;
+  margin-bottom: 15; 
 `;
 
 const Title = styled.Text`
   font-size: 17;
-  font-weight: 700;
+  font-weight: 400;
 `;

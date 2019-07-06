@@ -1,12 +1,11 @@
 import React, {Component} from 'react';
 import {Text, ScrollView, View, Image, Dimensions, StyleSheet, Alert, TouchableOpacity} from 'react-native';
 import {RowView, Container} from "./Theme";
-import ShortProfile from './ShortProfile';
 import styled from 'styled-components/native';
 
 const window = Dimensions.get('window');
 
-export default class DrawerMenu extends Component<Props> {
+export default class DrawerMenu extends Component {
   state = {
     menuList: [
       {title: '예약내역 / 구매취소'},
@@ -23,7 +22,6 @@ export default class DrawerMenu extends Component<Props> {
       <Container>
         <ScrollView scrollsToTop={false} style={styles.menu}>
           <TouchableOpacity style={styles.avatarContainer}>
-            <ShortProfile/>
           </TouchableOpacity>
           {
             menuList.map(menu => (

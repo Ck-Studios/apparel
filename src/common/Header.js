@@ -1,24 +1,36 @@
 import React, {Component} from 'react';
 import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {RowView, SearchIcon, DEVICE_HEIGHT} from "./Theme";
-// import Icon from 'react-native-vector-icons/Feather';
 import {Feather} from "@expo/vector-icons";
 import styled from "styled-components/native";
 
-export default function Header({toggleDrawer}) {
-  return (
-    <Container>
-      <HeaderButton onPress={toggleDrawer ? () => toggleDrawer() : null}>
-        <Feather name={'menu'} size={25} color={'#ff4253'}/>
-      </HeaderButton>
-      <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
-        <HeaderText>Apparel</HeaderText>
-      </View>
-      <HeaderButton>
-        <Feather name={'search'} size={25} color={'#ff4253'}/>
-      </HeaderButton>
-    </Container>
-  )
+export default class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+
+    };
+  }
+
+  componentDidMount() {
+
+  }
+
+  render() {
+    return (
+      <Container>
+        <HeaderButton>
+          <Feather name={'menu'} size={25} color={'#ff238e'}/>
+        </HeaderButton>
+        <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
+          <HeaderText>Apparel</HeaderText>
+        </View>
+        <HeaderButton>
+          <Feather name={'search'} size={25} color={'#ff238e'}/>
+        </HeaderButton>
+      </Container>
+    )
+  }
 }
 
 const Container = styled.View`

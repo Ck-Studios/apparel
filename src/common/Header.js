@@ -7,12 +7,7 @@ import styled from "styled-components/native";
 export default class Header extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-
-    };
-  }
-
-  componentDidMount() {
+    this.state = {};
   }
 
   render() {
@@ -23,7 +18,7 @@ export default class Header extends Component {
           <Feather name={'menu'} size={25} color={'#ff238e'}/>
         </HeaderButton>
         <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
-          <HeaderText>Apparel</HeaderText>
+          <HeaderText>스크램블에서 무엇이든 찾아보세요.</HeaderText>
         </View>
         <HeaderButton>
           <Feather name={'search'} size={25} color={'#ff238e'}/>
@@ -49,7 +44,7 @@ const HeaderButton = styled.TouchableOpacity`
 `;
 
 const HeaderText = styled.Text`
-    align-self: center;
-    font-size: 22;
-    font-weight: 700
+  align-self: center;
+  font-size: 17;
+  font-weight: 400
 `;

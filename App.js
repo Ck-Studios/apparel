@@ -21,15 +21,8 @@ export default class App extends Component {
   toggleDrawerMenu = () => {
     const {drawerOpen} = this.state;
     console.log('drawer', drawerOpen);
-    if(drawerOpen) {
-      this._drawer.open();
-    } else {
-      this._drawer.close();
-    }
+    this._drawer.open();
 
-    this.setState((prev) => ({
-      drawerOpen: !prev.drawerOpen,
-    }))
   };
 
   handleLoadingError = (error: Error) => {
@@ -76,8 +69,11 @@ export default class App extends Component {
       return (
         <SafeAreaView style={styles.container}>
           <Drawer
+            type={"overlay"}
             ref={(ref) => this._drawer = ref}
             content={<DrawerMenu/>}
+            tabToClose={true}
+            openDrawerOffset={0.2}
           >
             <Header toggleDrawer={() => this.toggleDrawerMenu()}/>
             <AppContainer/>

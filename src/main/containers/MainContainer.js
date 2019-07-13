@@ -12,9 +12,6 @@ export default class MainContainer extends Component {
   render() {
     return (
       <Container>
-        <TouchableOpacity onPress={() => this.props.toggleDrawer()}>
-          <Text>TESTJISEORJES</Text>
-        </TouchableOpacity>
         <ScrollContainer>
           <Card title={"WHAT'S NEW"}/>
           <Card title={"WHAT'S HOT"}/>

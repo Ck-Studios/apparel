@@ -8,11 +8,10 @@ const window = Dimensions.get('window');
 export default class DrawerMenu extends Component {
   state = {
     menuList: [
-      {title: '예약내역 / 구매취소'},
-      {title: '내쿠폰'},
-      {title: '관심'},
-      {title: '문의'},
-      {title: '공지사항'},
+      {title: '스크램블 이용 가이드'},
+      {title: '내 소식'},
+      {title: '알림'},
+      {title: '추천 컨텐츠'},
     ]
   };
 

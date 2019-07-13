@@ -24,8 +24,11 @@ export default class DrawerMenu extends Component {
           <TouchableOpacity style={styles.avatarContainer}>
           </TouchableOpacity>
           {
-            menuList.map(menu => (
-              <Menu onPress={() => Alert.alert('로그인을 해주세요!')}>
+            menuList.map((menu, index) => (
+              <Menu
+                onPress={() => Alert.alert('로그인을 해주세요!')}
+                key={index}
+              >
                 <Text style={styles.item}>
                   {menu.title}
                 </Text>

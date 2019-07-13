@@ -13,13 +13,13 @@ export default class Header extends Component {
   }
 
   componentDidMount() {
-
   }
 
   render() {
+    const {toggleDrawer} = this.props;
     return (
       <Container>
-        <HeaderButton>
+        <HeaderButton onPress={() => toggleDrawer()}>
           <Feather name={'menu'} size={25} color={'#ff238e'}/>
         </HeaderButton>
         <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>

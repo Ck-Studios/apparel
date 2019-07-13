@@ -6,14 +6,13 @@ import Card from '../components/Card';
 export default class MainContainer extends Component {
   constructor(props) {
     super(props);
-    console.warn(this.props);
     this.state = {};
   }
 
   render() {
     return (
       <Container>
-        <TouchableOpacity onPress={() => this.props.navigation.openDrawer()}>
+        <TouchableOpacity onPress={() => this.props.toggleDrawer()}>
           <Text>TESTJISEORJES</Text>
         </TouchableOpacity>
         <ScrollContainer>

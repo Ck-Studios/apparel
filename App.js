@@ -1,58 +1,91 @@
 import {AppLoading} from 'expo';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
-import React, {useState} from 'react';
+import React, {Component} from 'react';
 import {Platform, StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
-import {AppContainer, Drawer} from "./src/client/Navigation";
-// import AppNavigator from './navigation/AppNavigator';
+import {AppContainer} from "./src/client/Navigation";
+import Drawer from 'react-native-drawer';
+import DrawerMenu from './src/common/DrawerMenu';
+import Header from './src/common/Header';
 
-export default function App(props) {
-  const [isLoadingComplete, setLoadingComplete] = useState(false);
-
-  if (!isLoadingComplete && !props.skipLoadingScreen) {
-    return (
-      <AppLoading
-        startAsync={loadResourcesAsync}
-        onError={handleLoadingError}
-        onFinish={() => handleFinishLoading(setLoadingComplete)}
-      />
-    );
-  } else {
-    return (
-      <SafeAreaView style={styles.container}>
-        <Drawer>
-          <AppContainer/>
-        </Drawer>
-      </SafeAreaView>
-    );
+export default class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      isLoadingcomplete: false,
+      drawerOpen: false,
+    }
   }
-}
 
-async function loadResourcesAsync() {
-  await Promise.all([
-    Asset.loadAsync([
-      require('./assets/images/robot-dev.png'),
-      require('./assets/images/robot-prod.png'),
-    ]),
-    Font.loadAsync({
-      // This is the font that we are using for our tab bar
-      ...Ionicons.font,
-      // We include SpaceMono because we use it in HomeScreen.js. Feel free to
-      // remove this if you are not using it in your app
-      'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
-    }),
-  ]);
-}
+  toggleDrawerMenu = () => {
+    const {drawerOpen} = this.state;
+    console.log('drawer', drawerOpen);
+    if(drawerOpen) {
+      this._drawer.open();
+    } else {
+      this._drawer.close();
+    }
 
-function handleLoadingError(error: Error) {
-  // In this case, you might want to report the error to your error reporting
-  // service, for example Sentry
-  console.warn(error);
-}
+    this.setState((prev) => ({
+      drawerOpen: !prev.drawerOpen,
+    }))
+  };
 
-function handleFinishLoading(setLoadingComplete) {
-  setLoadingComplete(true);
+  handleLoadingError = (error: Error) => {
+    // In this case, you might want to report the error to your error reporting
+    // service, for example Sentry
+    console.warn(error);
+  };
+
+  handleFinishLoading = () => {
+    this.setState({
+      isLoadingComplete: true,
+    })
+  };
+
+  loadResourcesAsync = async () => {
+    await Promise.all([
+      Asset.loadAsync([
+        require('./assets/images/robot-dev.png'),
+        require('./assets/images/robot-prod.png'),
+      ]),
+      Font.loadAsync({
+        // This is the font that we are using for our tab bar
+        ...Ionicons.font,
+        // We include SpaceMono because we use it in HomeScreen.js. Feel free to
+        // remove this if you are not using it in your app
+        'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
+      }),
+    ]);
+  };
+
+  render() {
+    const {isLoadingComplete} = this.state;
+    const {skipLoadingScreen} = this.props;
+
+    if (!isLoadingComplete && !skipLoadingScreen) {
+      return (
+        <AppLoading
+          startAsync={this.loadResourcesAsync}
+          onError={this.handleLoadingError}
+          onFinish={() => this.handleFinishLoading()}
+        />
+      );
+    } else {
+      return (
+        <SafeAreaView style={styles.container}>
+          <Drawer
+            ref={(ref) => this._drawer = ref}
+            content={<DrawerMenu/>}
+          >
+            <Header toggleDrawer={() => this.toggleDrawerMenu()}/>
+            <AppContainer/>
+          </Drawer>
+        </SafeAreaView>
+      );
+    }
+  }
 }
 
 const styles = StyleSheet.create({

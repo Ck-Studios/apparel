@@ -2,6 +2,7 @@ import React from 'react';
 import {createAppContainer, createStackNavigator, createMaterialTopTabNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {Dimensions, StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
 import MainContainer from '../main/containers/MainContainer';
+import ProfileContainer from '../profile/ProfileContainer';
 import Header from '../common/Header';
 
 const {width, height} = Dimensions.get('window');
@@ -10,6 +11,10 @@ const RootTab = createMaterialTopTabNavigator({
   MainContainer: {
     screen: MainContainer,
   },
+
+  ProfileContainer: {
+    screen: ProfileContainer,
+  }
 }, {
   swipeEnabled: true,
   // tabBarPosition: 'bottom',

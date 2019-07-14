@@ -7,6 +7,7 @@ import {Ionicons} from '@expo/vector-icons';
 import {AppContainer} from "./src/client/Navigation";
 import Drawer from 'react-native-drawer';
 import DrawerMenu from './src/common/DrawerMenu';
+import NavigationService from './src/client/NavigationService';
 import Header from './src/common/Header';
 
 export default class App extends Component {
@@ -76,7 +77,11 @@ export default class App extends Component {
             openDrawerOffset={0.2}
           >
             <Header toggleDrawer={() => this.toggleDrawerMenu()}/>
-            <AppContainer/>
+            <AppContainer
+              ref={navigatorRef => {
+                NavigationService.setTOpLevelNavigator(navigatorRef);
+              }}
+            />
           </Drawer>
         </SafeAreaView>
       );

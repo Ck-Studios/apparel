@@ -3,6 +3,7 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {RowView, SearchIcon, DEVICE_HEIGHT} from "./Theme";
 import {Feather} from "@expo/vector-icons";
 import styled from "styled-components/native";
+import NavigationService from '../client/NavigationService';
 
 export default class Header extends Component {
   constructor(props) {

@@ -47,6 +47,8 @@ export default class DrawerMenu extends Component {
 
   render() {
     const {menuList, menuWithIcon} = this.state;
+    const {drawer} = this.props;
+
     return (
       <Container>
         <ScrollView scrollsToTop={false} style={styles.menu}>
@@ -57,7 +59,7 @@ export default class DrawerMenu extends Component {
               <SmallText sytle={{color: pointColor.gray}}>gahyun@gmail.com</SmallText>
               <SmallText sytle={{color: pointColor.gray}}>페이스북 인증됨</SmallText>
             </View>
-            <TouchableOpacity onPress={() => NavigationService.navigate('ProfileContainer')}>
+            <TouchableOpacity onPress={() => NavigationService.navigate('ProfileContainer', null, drawer)}>
               <MaterialCommunityIcons name={'settings'} color={iconColor} size={iconSize + 10}/>
             </TouchableOpacity>
           </View>

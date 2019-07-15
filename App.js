@@ -2,13 +2,14 @@ import {AppLoading} from 'expo';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet, View, SafeAreaView} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {AppContainer} from "./src/client/Navigation";
 import Drawer from 'react-native-drawer';
 import DrawerMenu from './src/common/DrawerMenu';
 import NavigationService from './src/client/NavigationService';
 import Header from './src/common/Header';
+import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 
 export default class App extends Component {
   constructor(props) {
@@ -20,10 +21,9 @@ export default class App extends Component {
   }
 
   toggleDrawerMenu = () => {
-    const {drawerOpen} = this.state;
-    console.log('drawer', drawerOpen);
-    this._drawer.open();
-
+    this.setState(prev => ({
+      drawerOpen: true,
+    }));
   };
 
   handleLoadingError = (error: Error) => {
@@ -55,7 +55,7 @@ export default class App extends Component {
   };
 
   render() {
-    const {isLoadingComplete} = this.state;
+    const {isLoadingComplete, drawerOpen} = this.state;
     const {skipLoadingScreen} = this.props;
 
     if (!isLoadingComplete && !skipLoadingScreen) {
@@ -72,9 +72,15 @@ export default class App extends Component {
           <Drawer
             type={"overlay"}
             ref={(ref) => this._drawer = ref}
-            content={<DrawerMenu/>}
-            tabToClose={true}
+            open={drawerOpen}
+            content={<DrawerMenu drawer={this._drawer}/>}
+            tapToClose={true}
             openDrawerOffset={0.2}
+            panCloseMask={0.2}
+            closedDrawerOffset={-3}
+            tweenHandler={(ratio) => ({
+              main: { opacity:(2-ratio)/2 }
+            })}
           >
             <Header toggleDrawer={() => this.toggleDrawerMenu()}/>
             <AppContainer

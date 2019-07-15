@@ -6,7 +6,11 @@ function setTOpLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
 }
 
-function navigate(routeName, params) {
+function navigate(routeName, params, drawer=null) {
+  if(drawer) {
+    drawer.close();
+  }
+
   _navigator.dispatch(
     NavigationActions.navigate({
       routeName,

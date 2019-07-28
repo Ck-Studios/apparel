@@ -14,9 +14,9 @@ export default class DrawerMenu extends Component {
   state = {
     menuList: [
       {title: '스크램블 이용 가이드', route: ''},
-      {title: '내 소식', route: '', notify: 15, notifyIconColor: pointColor.pink},
+      {title: '내 소식', route: '', notify: 15, notifyIconColor: pointColor.pink2},
       {title: '알림', route: '', statusMark: <Spot color={pointColor.green}/>, notify: 13, notifyIconColor: pointColor.gray},
-      {title: '추천 컨텐츠', route: '', statusMark: <Spot color={pointColor.red}/>, notify: 2, notifyIconColor: pointColor.gray},
+      {title: '추천 컨텐츠', route: '', statusMark: <Spot color={pointColor.pink2}/>, notify: 2, notifyIconColor: pointColor.gray},
     ],
 
     menuWithIcon: [
@@ -42,9 +42,6 @@ export default class DrawerMenu extends Component {
     ]
   };
 
-  renderMenuWithIcon = () => {
-  }
-
   render() {
     const {menuList, menuWithIcon} = this.state;
     const {drawer} = this.props;
@@ -53,13 +50,17 @@ export default class DrawerMenu extends Component {
       <Container>
         <ScrollView scrollsToTop={false} style={styles.menu}>
           <View style={styles.profileContainer}>
-            <AvatarWrapper/>
+            <AvatarWrapper
+              onPress={() => NavigationService.navigate('ProfileContainer')}
+            />
             <View>
-              <Title>이가현</Title>
-              <SmallText sytle={{color: pointColor.gray}}>gahyun@gmail.com</SmallText>
-              <SmallText sytle={{color: pointColor.gray}}>페이스북 인증됨</SmallText>
+              <Title fontWeight={'500'}>이가현</Title>
+              <SmallText color={pointColor.gray}>gahyun@gmail.com</SmallText>
+              <SmallText color={pointColor.gray}>페이스북 인증됨</SmallText>
             </View>
-            <TouchableOpacity onPress={() => NavigationService.navigate('ProfileContainer', null, drawer)}>
+            <TouchableOpacity
+              onPress={() => NavigationService.navigate('SettingContainer')}
+            >
               <MaterialCommunityIcons name={'settings'} color={iconColor} size={iconSize + 10}/>
             </TouchableOpacity>
           </View>
@@ -155,7 +156,7 @@ const Menu = styled.TouchableOpacity`
   padding-bottom: ${GAP_BETWEEN_MENU};
   padding-right: ${GAP_BETWEEN_MENU};
   border-bottom-width: 1;
-  border-bottom-color: ${pointColor.gray};
+  border-bottom-color: ${pointColor.gray0};
 `;
 
 const MenuTitleWrapper = styled(RowView)`

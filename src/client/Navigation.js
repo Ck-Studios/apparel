@@ -2,22 +2,20 @@ import React from 'react';
 import {createAppContainer, createStackNavigator, createMaterialTopTabNavigator, createDrawerNavigator, DrawerItems} from 'react-navigation';
 import {Dimensions, StyleSheet, Image, View, Text, TouchableOpacity} from 'react-native';
 import MainContainer from '../main/containers/MainContainer';
-import ProfileContainer from '../profile/ProfileContainer';
+import ProfileContainer from '../profile/containers/ProfileContainer';
+import SettingContainer from '../setting/containers/SettingContainer';
 import Header from '../common/Header';
+import {moderateScale, pointColor} from "../common/Theme";
 
 const {width, height} = Dimensions.get('window');
 
 const RootTab = createMaterialTopTabNavigator({
-  MainContainer: {
-    screen: MainContainer,
-  },
-
-  ProfileContainer: {
-    screen: ProfileContainer,
-  }
+  MainContainer,
+  ProfileContainer,
+  SettingContainer
 }, {
   swipeEnabled: true,
-  // tabBarPosition: 'bottom',
+  tabBarPosition: 'top',
   tabBarOptions: {
     showIcon: false,
     showLabel: false,
@@ -25,7 +23,8 @@ const RootTab = createMaterialTopTabNavigator({
       color: '#b1acae'
     },
     style: {
-      backgroundColor: 'white',
+      height: 0,
+      backgroundColor: pointColor.gray4,
     },
     indicatorStyle: {
       opacity: 0,
@@ -37,10 +36,10 @@ const AppStack = createStackNavigator({
   RootTab,
 }, {
   initialRouteName: 'RootTab',
-  headerMode: 'none',
+  headerMode: "none",
   defaultNavigationOptions: {
-    header: navigation => (<Header navigation={navigation}/>)
-  }
-});
+    // header: navigation => (<Header navigation={navigation}/>)
+  },
+},);
 
 export const AppContainer = createAppContainer(AppStack);

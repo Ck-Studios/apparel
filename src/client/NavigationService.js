@@ -1,15 +1,23 @@
 import {NavigationActions} from "react-navigation";
+import DrawerService from './DrawerService';
 
 let _navigator;
 
-function setTOpLevelNavigator(navigatorRef) {
+function setTopLevelNavigator(navigatorRef) {
   _navigator = navigatorRef;
 }
 
-function navigate(routeName, params, drawer=null) {
-  if(drawer) {
-    drawer.close();
+function getActiveRouteState (route) {
+  if (!route.routes || route.routes.length === 0 || route.index >= route.routes.length) {
+    return route;
   }
+
+  const childActiveRoute = route.routes[route.index];
+  return getActiveRouteState(childActiveRoute);
+}
+
+function navigate(routeName, params, drawer=null) {
+  DrawerService.closeDrawer();
 
   _navigator.dispatch(
     NavigationActions.navigate({
@@ -21,5 +29,6 @@ function navigate(routeName, params, drawer=null) {
 
 export default {
   navigate,
-  setTOpLevelNavigator,
+  setTopLevelNavigator,
+  getActiveRouteState,
 }

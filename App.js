@@ -8,6 +8,7 @@ import {AppContainer} from "./src/client/Navigation";
 import Drawer from 'react-native-drawer';
 import DrawerMenu from './src/common/DrawerMenu';
 import NavigationService from './src/client/NavigationService';
+import DrawerService from './src/client/DrawerService';
 import Header from './src/common/Header';
 import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 
@@ -15,7 +16,7 @@ export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      isLoadingcomplete: false,
+      isLoadingComplete: false,
       drawerOpen: false,
     }
   }
@@ -71,7 +72,10 @@ export default class App extends Component {
         <SafeAreaView style={styles.container}>
           <Drawer
             type={"overlay"}
-            ref={(ref) => this._drawer = ref}
+            ref={(drawerRef) => {
+              this._drawer = drawerRef;
+              DrawerService.setTopLevelDrawer(drawerRef);
+            }}
             open={drawerOpen}
             content={<DrawerMenu drawer={this._drawer}/>}
             tapToClose={true}
@@ -82,10 +86,10 @@ export default class App extends Component {
               main: { opacity:(2-ratio)/2 }
             })}
           >
-            <Header toggleDrawer={() => this.toggleDrawerMenu()}/>
+            {/*<Header toggleDrawer={() => this.toggleDrawerMenu()}/>*/}
             <AppContainer
               ref={navigatorRef => {
-                NavigationService.setTOpLevelNavigator(navigatorRef);
+                NavigationService.setTopLevelNavigator(navigatorRef);
               }}
             />
           </Drawer>

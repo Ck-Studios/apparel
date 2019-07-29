@@ -4,8 +4,8 @@ import {Dimensions, StyleSheet, Image, View, Text, TouchableOpacity} from 'react
 import MainContainer from '../main/containers/MainContainer';
 import ProfileContainer from '../profile/containers/ProfileContainer';
 import SettingContainer from '../setting/containers/SettingContainer';
-import Header from '../common/Header';
 import {moderateScale, pointColor} from "../common/Theme";
+import Header from '../common/Header';
 
 const {width, height} = Dimensions.get('window');
 

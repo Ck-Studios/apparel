@@ -28,13 +28,17 @@ const dummyPopularItems = [
 ];
 
 export default class MainContainer extends Component<Props> {
-  state = {};
+  state = {
+    showSearchInput: false,
+  };
 
   render() {
     const {navigation} = this.props;
     return (
       <MainContainerWrapper>
-        <Header navigation={navigation} title={'스크램블에서 무엇이든 찾아보세요.'}/>
+        <Header
+          navigation={navigation}
+        />
         <ScrollContainer>
           <Card title={"WHAT'S NEW"}>
             <NewApparel data={dummyNewApparel}/>

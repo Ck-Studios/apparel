@@ -8,10 +8,34 @@ import NavigationService from '../client/NavigationService';
 import DrawerService from '../client/DrawerService';
 
 export default class Header extends Component<Props> {
-  state = {};
+  state = {
+    showSearchInput: false,
+  };
+
+  onPressSearchButton = () => {
+    this.setState(prevState => ({
+      showSearchInput: !prevState.showSearchInput
+    }))
+  }
 
   renderLeftButton = () => {
+    const {showSearchInput} = this.state;
     const {leftButton, navigation} = this.props;
+
+    if(showSearchInput) {
+      return (
+        <HeaderButton onPress={() => this.onPressSearchButton()}>
+          <Feather
+            style={{
+              marginLeft: moderateScale(15),
+            }}
+            name={'search'}
+            size={25}
+            color={'#ff238e'}
+          />
+        </HeaderButton>
+      );
+    }
 
     if (leftButton === 'hide') {
       return <InvisibleHeaderButton/>
@@ -33,7 +57,12 @@ export default class Header extends Component<Props> {
   };
 
   renderRightButton = () => {
+    const {showSearchInput} = this.state;
     const {rightButton} = this.props;
+
+    if(showSearchInput) {
+      return null;
+    }
 
     if (rightButton === 'hide') {
       return <InvisibleHeaderButton/>;
@@ -43,7 +72,7 @@ export default class Header extends Component<Props> {
       return rightButton;
     } else {
       return (
-        <HeaderButton>
+        <HeaderButton onPress={() => this.onPressSearchButton()}>
           <Feather name={'search'} size={25} color={'#ff238e'}/>
         </HeaderButton>
       )
@@ -51,15 +80,23 @@ export default class Header extends Component<Props> {
   };
 
   render() {
+    const {showSearchInput} = this.state;
     const {title, leftButton, rightButton} = this.props;
     return (
       <HeaderContainerWrapper>
         {
           this.renderLeftButton()
         }
-        <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
-          <HeaderText>{title ? title : '스크램블에서 무엇이든 찾아보세요.'}</HeaderText>
-        </View>
+        {
+          showSearchInput ?
+            <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
+              <SearchInput placeholder={'검색어를 입력하세요'}/>
+            </View>
+            :
+            <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
+              <HeaderText>{title ? title : '스크램블에서 무엇이든 찾아보세요.'}</HeaderText>
+            </View>
+        }
         {
           this.renderRightButton()
         }
@@ -67,6 +104,13 @@ export default class Header extends Component<Props> {
     )
   }
 }
+
+const SearchInput = styled.TextInput`
+  flex: 1;
+  margin-left: ${moderateScale(20)};
+  height: ${moderateScale(30)};
+  font-size: ${moderateScale(17)};
+`;
 
 const HeaderContainerWrapper = styled.View`
   flex-direction: row;

@@ -2,7 +2,7 @@ import {AppLoading} from 'expo';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet, View, SafeAreaView, TouchableWithoutFeedback} from 'react-native';
+import {Platform, StatusBar, StyleSheet, View, SafeAreaView, TouchableWithoutFeedback, NativeModules, Dimensions} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {AppContainer} from "./src/client/Navigation";
 import Drawer from 'react-native-drawer';
@@ -11,6 +11,10 @@ import NavigationService from './src/client/NavigationService';
 import DrawerService from './src/client/DrawerService';
 import Header from './src/common/Header';
 import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
+
+const {width, height} = Dimensions.get('window');
+const {StatusBarManager} = NativeModules;
+const ANDROID_BAR_HEIGHT = StatusBarManager.HEIGHT;
 
 export default class App extends Component {
   constructor(props) {
@@ -103,5 +107,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    ...Platform.select({
+      android: {
+        marginTop: ANDROID_BAR_HEIGHT,
+      }
+    })
   },
 });

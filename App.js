@@ -2,19 +2,33 @@ import {AppLoading} from 'expo';
 import {Asset} from 'expo-asset';
 import * as Font from 'expo-font';
 import React, {Component} from 'react';
-import {Platform, StatusBar, StyleSheet, View, SafeAreaView, TouchableWithoutFeedback, NativeModules, Dimensions} from 'react-native';
+import {
+  Platform,
+  StatusBar,
+  StyleSheet,
+  View,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  NativeModules,
+  Dimensions
+} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import {AppContainer} from "./src/client/Navigation";
 import Drawer from 'react-native-drawer';
 import DrawerMenu from './src/common/DrawerMenu';
 import NavigationService from './src/client/NavigationService';
 import DrawerService from './src/client/DrawerService';
+import {AppReducer} from "./src/Reducer";
+import {createStore} from "redux";
 import Header from './src/common/Header';
+import {Provider} from 'react-redux';
 import TouchableOpacity from "react-native-web/dist/exports/TouchableOpacity";
 
 const {width, height} = Dimensions.get('window');
 const {StatusBarManager} = NativeModules;
 const ANDROID_BAR_HEIGHT = StatusBarManager.HEIGHT;
+
+const store = createStore(AppReducer);
 
 export default class App extends Component {
   constructor(props) {
@@ -73,31 +87,32 @@ export default class App extends Component {
       );
     } else {
       return (
-        <SafeAreaView style={styles.container}>
-          <Drawer
-            type={"overlay"}
-            ref={(drawerRef) => {
-              this._drawer = drawerRef;
-              DrawerService.setTopLevelDrawer(drawerRef);
-            }}
-            open={drawerOpen}
-            content={<DrawerMenu drawer={this._drawer}/>}
-            tapToClose={true}
-            openDrawerOffset={0.2}
-            panCloseMask={0.2}
-            closedDrawerOffset={-3}
-            tweenHandler={(ratio) => ({
-              main: { opacity:(2-ratio)/2 }
-            })}
-          >
-            {/*<Header toggleDrawer={() => this.toggleDrawerMenu()}/>*/}
-            <AppContainer
-              ref={navigatorRef => {
-                NavigationService.setTopLevelNavigator(navigatorRef);
+        <Provider store={store}>
+          <SafeAreaView style={styles.container}>
+            <Drawer
+              type={"overlay"}
+              ref={(drawerRef) => {
+                this._drawer = drawerRef;
+                DrawerService.setTopLevelDrawer(drawerRef);
               }}
-            />
-          </Drawer>
-        </SafeAreaView>
+              open={drawerOpen}
+              content={<DrawerMenu drawer={this._drawer}/>}
+              tapToClose={true}
+              openDrawerOffset={0.2}
+              panCloseMask={0.2}
+              closedDrawerOffset={-3}
+              tweenHandler={(ratio) => ({
+                main: {opacity: (2 - ratio) / 2}
+              })}
+            >
+              <AppContainer
+                ref={navigatorRef => {
+                  NavigationService.setTopLevelNavigator(navigatorRef);
+                }}
+              />
+            </Drawer>
+          </SafeAreaView>
+        </Provider>
       );
     }
   }

@@ -3,28 +3,34 @@ import {View, Text, StyleSheet, TouchableOpacity} from 'react-native';
 import {RowView, SearchIcon, DEVICE_HEIGHT, moderateScale, pointColor} from "./Theme";
 import {Feather} from "@expo/vector-icons";
 import styled from "styled-components/native";
-import {Ionicons} from "@expo/vector-icons";
+import {Ionicons, Foundation} from "@expo/vector-icons";
+import {connect} from 'react-redux';
 import NavigationService from '../client/NavigationService';
 import DrawerService from '../client/DrawerService';
+import {closeSearchInput, openSearchInput} from "./reducer/Actions";
 
-export default class Header extends Component<Props> {
-  state = {
-    showSearchInput: false,
-  };
+class Header extends Component<Props> {
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if(nextProps.isOpenSearchInput !== prevState.isOpenSearchInput) {
+      return {
+        isOpenSearchInput: nextProps.isOpenSearchInput,
+      }
+    }
 
-  onPressSearchButton = () => {
-    this.setState(prevState => ({
-      showSearchInput: !prevState.showSearchInput
-    }))
+    return null;
   }
 
-  renderLeftButton = () => {
-    const {showSearchInput} = this.state;
-    const {leftButton, navigation} = this.props;
+  state = {
+    isOpenSearchInput: false,
+  };
 
-    if(showSearchInput) {
+  renderLeftButton = () => {
+    const {isOpenSearchInput} = this.state;
+    const {leftButton, navigation, closeSearchInput} = this.props;
+
+    if(isOpenSearchInput) {
       return (
-        <HeaderButton onPress={() => this.onPressSearchButton()}>
+        <HeaderButton onPress={() => closeSearchInput()}>
           <Feather
             style={{
               marginLeft: moderateScale(15),
@@ -57,10 +63,10 @@ export default class Header extends Component<Props> {
   };
 
   renderRightButton = () => {
-    const {showSearchInput} = this.state;
-    const {rightButton} = this.props;
+    const {isOpenSearchInput} = this.state;
+    const {rightButton, openSearchInput, navigation} = this.props;
 
-    if(showSearchInput) {
+    if(isOpenSearchInput) {
       return null;
     }
 
@@ -68,11 +74,19 @@ export default class Header extends Component<Props> {
       return <InvisibleHeaderButton/>;
     }
 
+    if (rightButton === 'home') {
+      return (
+        <HeaderButton onPress={() => navigation.navigate('MainContainer')}>
+          <Foundation name={'home'} size={moderateScale(23)} color={pointColor.pink2}/>
+        </HeaderButton>
+      )
+    }
+
     if (rightButton) {
       return rightButton;
     } else {
       return (
-        <HeaderButton onPress={() => this.onPressSearchButton()}>
+        <HeaderButton onPress={() => openSearchInput()}>
           <Feather name={'search'} size={25} color={'#ff238e'}/>
         </HeaderButton>
       )
@@ -80,7 +94,7 @@ export default class Header extends Component<Props> {
   };
 
   render() {
-    const {showSearchInput} = this.state;
+    const {isOpenSearchInput} = this.state;
     const {title, leftButton, rightButton} = this.props;
     return (
       <HeaderContainerWrapper>
@@ -88,7 +102,7 @@ export default class Header extends Component<Props> {
           this.renderLeftButton()
         }
         {
-          showSearchInput ?
+          isOpenSearchInput ?
             <View style={{flex: 8, alignSelf: 'stretch', justifyContent: 'center'}}>
               <SearchInput placeholder={'검색어를 입력하세요'}/>
             </View>
@@ -104,6 +118,13 @@ export default class Header extends Component<Props> {
     )
   }
 }
+
+const IconButton = styled.TouchableOpacity`
+  width: ${moderateScale(30)};
+  height: ${moderateScale(30)};
+  justify-content: center;
+  align-items: center;
+`;
 
 const SearchInput = styled.TextInput`
   flex: 1;
@@ -135,6 +156,17 @@ const HeaderButton = styled.TouchableOpacity`
 
 const HeaderText = styled.Text`
   align-self: center;
-  font-size: 17;
-  font-weight: 400
+  font-size: ${moderateScale(17)};
+  font-weight: 700;
 `;
+
+const mapStateToProps = state => {
+  return state.HeaderReducer;
+};
+
+const mapDispatchToProps = {
+  openSearchInput,
+  closeSearchInput
+};
+
+export default connect(mapStateToProps, mapDispatchToProps) (Header);

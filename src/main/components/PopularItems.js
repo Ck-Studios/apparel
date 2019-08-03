@@ -11,12 +11,19 @@ export default function PopularItems(props) {
       numColumns={3}
       renderItem={({item, index}) => (
         <Apparel>
-          <ImageView/>
+          <ImageView>
+            <Image source={item.image} resizeMode={'cover'}/>
+          </ImageView>
         </Apparel>
       )}
     />
   )
 }
+
+const Image = styled.Image`
+  width: 100%;
+  height: 100%;
+`;
 
 const Apparel = styled.TouchableOpacity`
   flex: 1;

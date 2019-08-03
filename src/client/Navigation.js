@@ -4,6 +4,7 @@ import {Dimensions, StyleSheet, Image, View, Text, TouchableOpacity} from 'react
 import MainContainer from '../main/containers/MainContainer';
 import ProfileContainer from '../profile/containers/ProfileContainer';
 import SettingContainer from '../setting/containers/SettingContainer';
+import DetailApparelContainer from '../apparel/containers/DetailApparelContainer';
 import {moderateScale, pointColor} from "../common/Theme";
 import Header from '../common/Header';
 
@@ -11,8 +12,6 @@ const {width, height} = Dimensions.get('window');
 
 const RootTab = createMaterialTopTabNavigator({
   MainContainer,
-  ProfileContainer,
-  SettingContainer
 }, {
   swipeEnabled: true,
   tabBarPosition: 'top',
@@ -34,6 +33,9 @@ const RootTab = createMaterialTopTabNavigator({
 
 const AppStack = createStackNavigator({
   RootTab,
+  ProfileContainer,
+  SettingContainer,
+  DetailApparelContainer
 }, {
   initialRouteName: 'RootTab',
   headerMode: "none",

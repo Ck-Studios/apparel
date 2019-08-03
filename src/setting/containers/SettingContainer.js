@@ -7,10 +7,6 @@ import Header from '../../common/Header';
 import Switch from 'react-native-switch-pro';
 
 export default class SettingContainer extends Component<Props> {
-  static navigationOptions = {
-    title: null,
-  }
-
   state = {
     basicSettings: [
       {
